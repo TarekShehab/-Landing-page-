@@ -4,8 +4,20 @@ let navbarList = document.getElementById('navbar__list')
 // Add all sections to the page
 const main = document.querySelector('main')
 
-const paragraph1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod."
-const paragraph2 = "Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non."
+// Fake paragraphs for the sections
+const paragraph1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.'
+const paragraph2 = 'Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.'
+
+// function to determine if an element is in the viewport
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
 
 class Section{
     constructor(id, dataNav, title, contents){
@@ -22,7 +34,7 @@ class Section{
         sectionElement.setAttribute('id', this.id)
         sectionElement.setAttribute('data-nav', this.dataNav)
         if (this.isActive)
-            sectionElement.setAttribute('class', 'your-active-class')
+            sectionElement.setAttribute('class', 'active-section')
         
         const divElement = document.createElement('div')
         divElement.setAttribute('class', 'landing__container')
@@ -41,7 +53,7 @@ class Section{
         return sectionElement
     }
 
-    // Adds the anchor to this section in the navigation bar
+    // Adds the anchor to a section in the navigation bar
     createAnchorInNavbar(){
         const listItemElement = document.createElement('li')
         listItemElement.setAttribute('class', 'menu__link')
@@ -49,6 +61,10 @@ class Section{
         const anchorElement = document.createElement('a')
         anchorElement.setAttribute('href', "#"+this.id)
         anchorElement.textContent = this.title
+        // anchorElement.addEventListener('click', () => {
+        //     this.isActive = true
+        //     document.getElementById(this.id).setAttribute('class', 'active-section')
+        // })
 
         listItemElement.appendChild(anchorElement)
         navbarList.appendChild(listItemElement)
@@ -56,187 +72,33 @@ class Section{
 
 }
 
-const section1 = new Section("section1", "Section 1", "Section 1", [paragraph1, paragraph2], false)
-const section2 = new Section("section2", "Section 2", "Section 2", [paragraph1, paragraph2], false)
-const section3 = new Section("section3", "Section 3", "Section 3", [paragraph1, paragraph2], false)
-const section4 = new Section("section4", "Section 4", "Section 4", [paragraph1, paragraph2], false)
- 
 // Create an array with all the sections that are supposedly fetched from a database
+const section1 = new Section('section1', 'Section 1', 'Section 1', [paragraph1, paragraph2])
+const section2 = new Section('section2', 'Section 2', 'Section 2', [paragraph1, paragraph2])
+const section3 = new Section('section3', 'Section 3', 'Section 3', [paragraph1, paragraph2])
+const section4 = new Section('section4', 'Section 4', 'Section 4', [paragraph1, paragraph2])
+// section1.isActive = true
 const contentSections = [section1, section2, section3]
 
 // Add every section as well as it's anchor in the navigation bar
 for (let section of contentSections){
-    main.appendChild(section.createContentSection())
+    
+    // add the section
+    const sectionHTML = section.createContentSection()
+    main.appendChild(sectionHTML)
+    
+    // add the section anchor in the navigation bar
     section.createAnchorInNavbar()
+
+    // add an event listener to the each section
+    document.addEventListener('scroll', () => {
+        if(isInViewport(sectionHTML)){
+            console.log(section + "is visible!")
+            section.isActive = true
+            sectionHTML.setAttribute('class', 'active-section')
+        }else{
+            section.isActive = false
+            sectionHTML.removeAttribute('class')            
+        }
+    })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
-*/
-
-/**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
-*/
-
-/**
- * Define Global Variables
- * 
-*/
-
-
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
-
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
-
-// build the nav
-
-
-// Add class 'active' to section when near top of viewport
-
-
-// Scroll to anchor ID using scrollTO event
-
-
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
-
-
