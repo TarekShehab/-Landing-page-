@@ -12,10 +12,10 @@ const paragraph2 = 'Aliquam a convallis justo. Vivamus venenatis, erat eget pulv
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        (rect.top + 150) >= 0 &&            //is top in viewport
+        rect.left >= 0 &&            //is left in viewport
+        (rect.bottom - 150) <= (window.innerHeight || document.documentElement.clientHeight) &&         //is bottom in viewport
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)            //is right in viewport
     );
 }
 
@@ -61,44 +61,53 @@ class Section{
         const anchorElement = document.createElement('a')
         anchorElement.setAttribute('href', "#"+this.id)
         anchorElement.textContent = this.title
-        // anchorElement.addEventListener('click', () => {
-        //     this.isActive = true
-        //     document.getElementById(this.id).setAttribute('class', 'active-section')
-        // })
 
         listItemElement.appendChild(anchorElement)
+
         navbarList.appendChild(listItemElement)
+
+        return listItemElement
+    }
+
+    // add a scroll event listener to the whole document to highlight the section in the viewport
+    addScrollListener(contentsections){
+        document.addEventListener('scroll', () => {
+            for (let section of contentSections){
+                const sectionHTML = document.getElementById(section.id) 
+                if(isInViewport(sectionHTML.querySelector('p'))){
+                    section.isActive = true
+                    sectionHTML.classList.add('active-section')
+                }else{
+                    section.isActive = false
+                    sectionHTML.classList.remove('active-section')            
+                }
+            }}
+        )
     }
 
 }
 
-// Create an array with all the sections that are supposedly fetched from a database
+// Create an array with all the sections that are supposedly fetched from a database xD
 const section1 = new Section('section1', 'Section 1', 'Section 1', [paragraph1, paragraph2])
 const section2 = new Section('section2', 'Section 2', 'Section 2', [paragraph1, paragraph2])
 const section3 = new Section('section3', 'Section 3', 'Section 3', [paragraph1, paragraph2])
 const section4 = new Section('section4', 'Section 4', 'Section 4', [paragraph1, paragraph2])
-// section1.isActive = true
-const contentSections = [section1, section2, section3]
+const contentSections = [section1, section2, section3, section4]
 
-// Add every section as well as it's anchor in the navigation bar
-for (let section of contentSections){
-    
-    // add the section
-    const sectionHTML = section.createContentSection()
-    main.appendChild(sectionHTML)
-    
-    // add the section anchor in the navigation bar
-    section.createAnchorInNavbar()
+// populate the page with content sections and their corresponding anchors
+function buildApp(){
 
-    // add an event listener to the each section
-    document.addEventListener('scroll', () => {
-        if(isInViewport(sectionHTML)){
-            console.log(section + "is visible!")
-            section.isActive = true
-            sectionHTML.setAttribute('class', 'active-section')
-        }else{
-            section.isActive = false
-            sectionHTML.removeAttribute('class')            
-        }
-    })
+    for (let section of contentSections){
+        
+        // add the section on page
+        const sectionHTML = section.createContentSection()
+        main.appendChild(sectionHTML)
+        
+        // add the section anchor in the navigation bar
+        const listItemHTML = section.createAnchorInNavbar()
+    }
+
+    addEventListener(contentSections)
 }
+
+buildApp()

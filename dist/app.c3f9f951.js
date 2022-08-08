@@ -140,7 +140,11 @@ var paragraph2 = 'Aliquam a convallis justo. Vivamus venenatis, erat eget pulvin
 
 function isInViewport(element) {
   var rect = element.getBoundingClientRect();
-  return rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+  return rect.top + 150 >= 0 && //is top in viewport
+  rect.left >= 0 && //is left in viewport
+  rect.bottom - 150 <= (window.innerHeight || document.documentElement.clientHeight) && //is bottom in viewport
+  rect.right <= (window.innerWidth || document.documentElement.clientWidth) //is right in viewport
+  ;
 }
 
 var Section = /*#__PURE__*/function () {
@@ -195,50 +199,65 @@ var Section = /*#__PURE__*/function () {
       listItemElement.setAttribute('class', 'menu__link');
       var anchorElement = document.createElement('a');
       anchorElement.setAttribute('href', "#" + this.id);
-      anchorElement.textContent = this.title; // anchorElement.addEventListener('click', () => {
-      //     this.isActive = true
-      //     document.getElementById(this.id).setAttribute('class', 'active-section')
-      // })
-
+      anchorElement.textContent = this.title;
       listItemElement.appendChild(anchorElement);
       navbarList.appendChild(listItemElement);
+      return listItemElement;
+    } // add a scroll event listener to the whole document to highlight the section in the viewport
+
+  }, {
+    key: "addScrollListener",
+    value: function addScrollListener(contentsections) {
+      document.addEventListener('scroll', function () {
+        var _iterator2 = _createForOfIteratorHelper(contentSections),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var section = _step2.value;
+            var sectionHTML = document.getElementById(section.id);
+
+            if (isInViewport(sectionHTML.querySelector('p'))) {
+              section.isActive = true;
+              sectionHTML.classList.add('active-section');
+            } else {
+              section.isActive = false;
+              sectionHTML.classList.remove('active-section');
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      });
     }
   }]);
 
   return Section;
-}(); // Create an array with all the sections that are supposedly fetched from a database
+}(); // Create an array with all the sections that are supposedly fetched from a database xD
 
 
 var section1 = new Section('section1', 'Section 1', 'Section 1', [paragraph1, paragraph2]);
 var section2 = new Section('section2', 'Section 2', 'Section 2', [paragraph1, paragraph2]);
 var section3 = new Section('section3', 'Section 3', 'Section 3', [paragraph1, paragraph2]);
-var section4 = new Section('section4', 'Section 4', 'Section 4', [paragraph1, paragraph2]); // section1.isActive = true
+var section4 = new Section('section4', 'Section 4', 'Section 4', [paragraph1, paragraph2]);
+var contentSections = [section1, section2, section3, section4]; // populate the page with content sections and their corresponding anchors
 
-var contentSections = [section1, section2, section3]; // Add every section as well as it's anchor in the navigation bar
+function buildApp() {
+  for (var _i = 0, _contentSections = contentSections; _i < _contentSections.length; _i++) {
+    var section = _contentSections[_i];
+    // add the section on page
+    var sectionHTML = section.createContentSection();
+    main.appendChild(sectionHTML); // add the section anchor in the navigation bar
 
-var _loop = function _loop() {
-  var section = _contentSections[_i];
-  // add the section
-  var sectionHTML = section.createContentSection();
-  main.appendChild(sectionHTML); // add the section anchor in the navigation bar
+    var listItemHTML = section.createAnchorInNavbar();
+  }
 
-  section.createAnchorInNavbar(); // add an event listener to the each section
-
-  document.addEventListener('scroll', function () {
-    if (isInViewport(sectionHTML)) {
-      console.log(section + "is visible!");
-      section.isActive = true;
-      sectionHTML.setAttribute('class', 'active-section');
-    } else {
-      section.isActive = false;
-      sectionHTML.removeAttribute('class');
-    }
-  });
-};
-
-for (var _i = 0, _contentSections = contentSections; _i < _contentSections.length; _i++) {
-  _loop();
+  addEventListener(contentSections);
 }
+
+buildApp();
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -267,7 +286,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61659" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63904" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
