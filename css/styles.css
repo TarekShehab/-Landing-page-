@@ -1,4 +1,8 @@
 /* ---- Base Rules ---- */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background: rgb(136,203,171);
     background: linear-gradient(0deg, rgba(136,203,171,1) 0%, rgba(0,13,60,1) 100%);
@@ -6,10 +10,6 @@ body {
     font-family: 'Merriweather', serif;
     color: #fff;
 }
-
-html {
-    scroll-behavior: smooth;
-  }
 
 /* Typeography General*/
 h1 {
@@ -64,7 +64,7 @@ section {
 
 .navbar__menu li {
     display: inline-block;
-    /* color: #000; */
+    color: #000;
 }
 
 .navbar__menu .menu__link {
@@ -76,14 +76,25 @@ section {
 }
 
 .navbar__menu .menu__link:hover {
+    border-radius: 5%;
     background: #333;
     color: #fff;
     transition: ease 0.3s all;
 }
 
+/* tarek writes: */
+#navbar__list{
+    background: rgba(136,203,171,1);
+    height: 5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 5px solid black;
+}
+
 /* Header Styles */
 .page__header {
-    background: #fff;
+    /* background: rgba(136,203,171,1); */
     position: fixed;
     top: 0;
     width: 100%;
@@ -188,7 +199,7 @@ section:nth-of-type(3n + 1) .landing__container::after {
 /* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
 section.your-active-class {
     background: rgb(0, 0, 0);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(0deg, rgba(0, 0, 0, .8) 0%, rgba(0, 0, 0, 0.05) 100%);
 }
 
 section.your-active-class .landing__container::before {
