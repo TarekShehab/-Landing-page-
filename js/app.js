@@ -40,18 +40,18 @@ class Section{
 
         // Collpase functionality
         collapseButton.addEventListener('click', () => {
-            // Not collapsed
+            // Uncollapsed => collapse
             if(collapseButton.textContent === '▼'){
                 collapseButton.textContent = '►'
                 for(let p of pElements){
-                    p.style.visibility='hidden'
+                    p.style.visibility = 'hidden'
                 }
             }
-            // Collapsed
+            // Collapsed => Uncollapsed
             else{
                 collapseButton.textContent = '▼'
                 for(let p of pElements){
-                    p.style.visibility='visible'
+                    p.style.visibility = 'visible'
                 }
             }
         })
@@ -80,11 +80,11 @@ class Section{
 // Get the list that we will put the anchors in
 let navbarList = document.getElementById('navbar__list')
 
-// Get the main that we add the sections to
-const main = document.querySelector('main')
-
 // Get the navbar menu
 const navbar = document.querySelector('.navbar__menu')
+
+// Get the main that we add the sections to
+const main = document.querySelector('main')
 
 // Fake paragraphs for the sections
 const paragraph1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.'
@@ -157,7 +157,7 @@ const toggleNavbarHandle = () => {
 }
 
 
-
+// Handle show/hide scroll-to-top button
 const scrollToTopButtonHandle = () => {
     const doc = document.querySelector('html')
     const toTop = document.getElementById('scrollup-button')
@@ -175,7 +175,7 @@ const scrollToTopButtonHandle = () => {
 
 
 // Populate the page with content sections, anchors, and add necessary event listeners
-function buildApp(){
+const buildApp = () => {
 
     for (let section of contentSections){       
         // Add the section on page
