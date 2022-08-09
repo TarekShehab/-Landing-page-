@@ -249,3 +249,10 @@ section.active-section .landing__container::after {
     bottom: 20px;
     right: 20px;  
 }
+
+#collapse-button{
+    /* opacity: 0; */
+    color: white;
+    border: 0;
+    background-color:rgba(0, 0, 0, 0) ;
+}

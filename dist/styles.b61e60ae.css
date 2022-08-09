@@ -250,4 +250,11 @@ section.active-section .landing__container::after {
     right: 20px;  
 }
 
+#collapse-button{
+    /* opacity: 0; */
+    color: white;
+    border: 0;
+    background-color:rgba(0, 0, 0, 0) ;
+}
+
 /*# sourceMappingURL=/styles.b61e60ae.css.map */

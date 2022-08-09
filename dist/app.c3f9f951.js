@@ -118,100 +118,17 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"js/app.js":[function(require,module,exports) {
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-// Get the list that we will put the anchors in
-var navbarList = document.getElementById('navbar__list'); // Get the main that we add the sections to
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var main = document.querySelector('main'); // Get the navbar menu
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-var navbar = document.querySelector('.navbar__menu'); // Fake paragraphs for the sections
-
-var paragraph1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.';
-var paragraph2 = 'Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.'; // Determine if an element is in the viewport
-
-function isInViewport(element) {
-  var rect = element.getBoundingClientRect();
-  return rect.top + 150 >= 0 && //is top in viewport
-  rect.left >= 0 && //is left in viewport
-  rect.bottom - 150 <= (window.innerHeight || document.documentElement.clientHeight) && //is bottom in viewport
-  rect.right <= (window.innerWidth || document.documentElement.clientWidth) //is right in viewport
-  ;
-} // Add a scroll event listener to the document to highlight the section in the viewport
-
-
-function activeSectionHandle(contentsections) {
-  document.addEventListener('scroll', function () {
-    var _iterator = _createForOfIteratorHelper(contentSections),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var section = _step.value;
-        var sectionHTML = document.getElementById(section.id);
-
-        if (isInViewport(sectionHTML.querySelector('p'))) {
-          section.isActive = true;
-          sectionHTML.classList.add('active-section');
-        } else {
-          section.isActive = false;
-          sectionHTML.classList.remove('active-section');
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-  });
-} // Helper method that runs a callback method when user stops scrolling 
-
-
-var onScrollStop = function onScrollStop(callback) {
-  var isScrolling;
-  window.addEventListener('scroll', function (e) {
-    clearTimeout(isScrolling);
-    isScrolling = setTimeout(function () {
-      return callback();
-    }, 150);
-  }, false);
-}; // Handle showing and hiding the navigation bar
-
-
-function toggleNavbarHandle() {
-  // Shows navigation bar when the user scrolls
-  document.addEventListener('scroll', function () {
-    navbar.style.visibility = 'visible';
-  }); // Hide navigation bar after user stops scrolling
-
-  onScrollStop(function () {
-    setTimeout(function () {
-      navbar.style.visibility = 'hidden';
-    }, "1500");
-  });
-}
-
-function scrollToTopButtonHandle() {
-  var doc = document.querySelector('html');
-  var toTop = document.getElementById('scrollup-button');
-  document.addEventListener('scroll', function () {
-    if (window.scrollY >= doc.clientHeight / 2) {
-      toTop.style.visibility = 'visible';
-    } else {
-      toTop.style.visibility = 'hidden';
-    }
-  });
-}
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
 var Section = /*#__PURE__*/function () {
   function Section(id, dataNav, title, contents) {
@@ -231,30 +148,79 @@ var Section = /*#__PURE__*/function () {
       var sectionElement = document.createElement('section');
       sectionElement.setAttribute('id', this.id);
       sectionElement.setAttribute('data-nav', this.dataNav);
-      if (this.isActive) sectionElement.setAttribute('class', 'active-section');
+
+      if (this.isActive) {
+        sectionElement.setAttribute('class', 'active-section');
+      }
+
       var divElement = document.createElement('div');
       divElement.setAttribute('class', 'landing__container');
       sectionElement.appendChild(divElement);
       var h2Element = document.createElement('h2');
       h2Element.textContent = this.title;
       divElement.appendChild(h2Element);
+      var collapseButton = document.createElement('button');
+      collapseButton.type = 'button';
+      collapseButton.id = 'collapse-button';
+      collapseButton.textContent = '▼';
+      h2Element.appendChild(collapseButton);
+      var pElements = [];
 
-      var _iterator2 = _createForOfIteratorHelper(this.contents),
-          _step2;
+      var _iterator = _createForOfIteratorHelper(this.contents),
+          _step;
 
       try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var paragraph = _step2.value;
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var paragraph = _step.value;
           var pElement = document.createElement('p');
           pElement.textContent = paragraph;
+          pElements.push(pElement);
           divElement.appendChild(pElement);
-        }
+        } // Collpase functionality
+
       } catch (err) {
-        _iterator2.e(err);
+        _iterator.e(err);
       } finally {
-        _iterator2.f();
+        _iterator.f();
       }
 
+      collapseButton.addEventListener('click', function () {
+        // Not collapsed
+        if (collapseButton.textContent === '▼') {
+          collapseButton.textContent = '►';
+
+          var _iterator2 = _createForOfIteratorHelper(pElements),
+              _step2;
+
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var p = _step2.value;
+              p.style.visibility = 'hidden';
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
+          }
+        } // Collapsed
+        else {
+          collapseButton.textContent = '▼';
+
+          var _iterator3 = _createForOfIteratorHelper(pElements),
+              _step3;
+
+          try {
+            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+              var _p = _step3.value;
+              _p.style.visibility = 'visible';
+            }
+          } catch (err) {
+            _iterator3.e(err);
+          } finally {
+            _iterator3.f();
+          }
+        }
+      });
       return sectionElement;
     } // Add the section anchor to the navigation bar
 
@@ -273,21 +239,104 @@ var Section = /*#__PURE__*/function () {
   }]);
 
   return Section;
-}(); // Create an array with all the sections that are supposedly fetched from a database xD
+}(); // Get the list that we will put the anchors in
 
+
+var navbarList = document.getElementById('navbar__list'); // Get the main that we add the sections to
+
+var main = document.querySelector('main'); // Get the navbar menu
+
+var navbar = document.querySelector('.navbar__menu'); // Fake paragraphs for the sections
+
+var paragraph1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.';
+var paragraph2 = 'Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.'; // Create an array with all the sections that are supposedly fetched from a database xD
 
 var section1 = new Section('section1', 'Section 1', 'Section 1', [paragraph1, paragraph2]);
 var section2 = new Section('section2', 'Section 2', 'Section 2', [paragraph1, paragraph2]);
 var section3 = new Section('section3', 'Section 3', 'Section 3', [paragraph1, paragraph2]);
 var section4 = new Section('section4', 'Section 4', 'Section 4', [paragraph1, paragraph2]);
-var contentSections = [section1, section2, section3, section4]; // Populate the page with content sections, anchors, and add necessary event listeners
+var contentSections = [section1, section2, section3, section4]; // Determine if an element is in the viewport
+
+var isInViewport = function isInViewport(element) {
+  var rect = element.getBoundingClientRect();
+  return rect.top + 150 >= 0 && //is top in viewport
+  rect.left >= 0 && //is left in viewport
+  rect.bottom - 150 <= (window.innerHeight || document.documentElement.clientHeight) && //is bottom in viewport
+  rect.right <= (window.innerWidth || document.documentElement.clientWidth) //is right in viewport
+  ;
+}; // Add a scroll event listener to the document to highlight the section in the viewport
+
+
+var activeSectionHandle = function activeSectionHandle(contentsections) {
+  document.addEventListener('scroll', function () {
+    var _iterator4 = _createForOfIteratorHelper(contentSections),
+        _step4;
+
+    try {
+      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+        var section = _step4.value;
+        var sectionHTML = document.getElementById(section.id);
+
+        if (isInViewport(sectionHTML.querySelector('p'))) {
+          section.isActive = true;
+          sectionHTML.classList.add('active-section');
+        } else {
+          section.isActive = false;
+          sectionHTML.classList.remove('active-section');
+        }
+      }
+    } catch (err) {
+      _iterator4.e(err);
+    } finally {
+      _iterator4.f();
+    }
+  });
+}; // Helper method that runs a callback method when user stops scrolling 
+
+
+var onScrollStop = function onScrollStop(callback) {
+  var isScrolling;
+  window.addEventListener('scroll', function (e) {
+    clearTimeout(isScrolling);
+    isScrolling = setTimeout(function () {
+      return callback();
+    }, 150);
+  }, false);
+}; // Handle showing and hiding the navigation bar
+
+
+var toggleNavbarHandle = function toggleNavbarHandle() {
+  // Shows navigation bar when the user scrolls
+  document.addEventListener('scroll', function () {
+    navbar.style.visibility = 'visible';
+  }); // Hide navigation bar after user stops scrolling
+
+  onScrollStop(function () {
+    setTimeout(function () {
+      navbar.style.visibility = 'hidden';
+    }, "1500");
+  });
+};
+
+var scrollToTopButtonHandle = function scrollToTopButtonHandle() {
+  var doc = document.querySelector('html');
+  var toTop = document.getElementById('scrollup-button');
+  document.addEventListener('scroll', function () {
+    if (window.scrollY >= doc.clientHeight / 2) {
+      toTop.style.visibility = 'visible';
+    } else {
+      toTop.style.visibility = 'hidden';
+    }
+  });
+}; // Populate the page with content sections, anchors, and add necessary event listeners
+
 
 function buildApp() {
   for (var _i = 0, _contentSections = contentSections; _i < _contentSections.length; _i++) {
     var section = _contentSections[_i];
-    // add the section on page
+    // Add the section on page
     var sectionHTML = section.createContentSection();
-    main.appendChild(sectionHTML); // add the section anchor in the navigation bar
+    main.appendChild(sectionHTML); // Add the section anchor in the navigation bar
 
     var listItemHTML = section.createAnchorInNavbar();
   } // Add scroll event listener to handle the active section task
@@ -329,7 +378,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62116" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63541" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
