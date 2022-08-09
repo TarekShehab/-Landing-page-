@@ -118,25 +118,27 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"js/app.js":[function(require,module,exports) {
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-// get the list that we will put the anchors in
-var navbarList = document.getElementById('navbar__list'); // Add all sections to the page
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-var main = document.querySelector('main'); // Fake paragraphs for the sections
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+// Get the list that we will put the anchors in
+var navbarList = document.getElementById('navbar__list'); // Get the main that we add the sections to
+
+var main = document.querySelector('main'); // Get the navbar menu
+
+var navbar = document.querySelector('.navbar__menu'); // Fake paragraphs for the sections
 
 var paragraph1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.';
-var paragraph2 = 'Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.'; // function to determine if an element is in the viewport
+var paragraph2 = 'Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.'; // Determine if an element is in the viewport
 
 function isInViewport(element) {
   var rect = element.getBoundingClientRect();
@@ -145,6 +147,58 @@ function isInViewport(element) {
   rect.bottom - 150 <= (window.innerHeight || document.documentElement.clientHeight) && //is bottom in viewport
   rect.right <= (window.innerWidth || document.documentElement.clientWidth) //is right in viewport
   ;
+} // Add a scroll event listener to the document to highlight the section in the viewport
+
+
+function activeSectionHandle(contentsections) {
+  document.addEventListener('scroll', function () {
+    var _iterator = _createForOfIteratorHelper(contentSections),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var section = _step.value;
+        var sectionHTML = document.getElementById(section.id);
+
+        if (isInViewport(sectionHTML.querySelector('p'))) {
+          section.isActive = true;
+          sectionHTML.classList.add('active-section');
+        } else {
+          section.isActive = false;
+          sectionHTML.classList.remove('active-section');
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  });
+} // Helper method that runs a callback method when user stops scrolling 
+
+
+var onScrollStop = function onScrollStop(callback) {
+  var isScrolling;
+  window.addEventListener('scroll', function (e) {
+    clearTimeout(isScrolling);
+    isScrolling = setTimeout(function () {
+      return callback();
+    }, 150);
+  }, false);
+}; // Handle showing and hiding the navigation bar
+
+
+function toggleNavbarHandle() {
+  // Shows navigation bar when the user scrolls
+  document.addEventListener('scroll', function () {
+    navbar.style.visibility = 'visible';
+  }); // Hide navigation bar after user stops scrolling
+
+  onScrollStop(function () {
+    setTimeout(function () {
+      navbar.style.visibility = 'hidden';
+    }, "1500");
+  });
 }
 
 var Section = /*#__PURE__*/function () {
@@ -156,7 +210,7 @@ var Section = /*#__PURE__*/function () {
     this.title = title;
     this.contents = contents;
     this.isActive = false;
-  } // this method creates the section html element that will be viewed on the page
+  } // Create the section html element that will be viewed on the page
 
 
   _createClass(Section, [{
@@ -173,24 +227,24 @@ var Section = /*#__PURE__*/function () {
       h2Element.textContent = this.title;
       divElement.appendChild(h2Element);
 
-      var _iterator = _createForOfIteratorHelper(this.contents),
-          _step;
+      var _iterator2 = _createForOfIteratorHelper(this.contents),
+          _step2;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var paragraph = _step.value;
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var paragraph = _step2.value;
           var pElement = document.createElement('p');
           pElement.textContent = paragraph;
           divElement.appendChild(pElement);
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator.f();
+        _iterator2.f();
       }
 
       return sectionElement;
-    } // Adds the anchor to a section in the navigation bar
+    } // Add the section anchor to the navigation bar
 
   }, {
     key: "createAnchorInNavbar",
@@ -203,34 +257,6 @@ var Section = /*#__PURE__*/function () {
       listItemElement.appendChild(anchorElement);
       navbarList.appendChild(listItemElement);
       return listItemElement;
-    } // add a scroll event listener to the whole document to highlight the section in the viewport
-
-  }, {
-    key: "addScrollListener",
-    value: function addScrollListener(contentsections) {
-      document.addEventListener('scroll', function () {
-        var _iterator2 = _createForOfIteratorHelper(contentSections),
-            _step2;
-
-        try {
-          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-            var section = _step2.value;
-            var sectionHTML = document.getElementById(section.id);
-
-            if (isInViewport(sectionHTML.querySelector('p'))) {
-              section.isActive = true;
-              sectionHTML.classList.add('active-section');
-            } else {
-              section.isActive = false;
-              sectionHTML.classList.remove('active-section');
-            }
-          }
-        } catch (err) {
-          _iterator2.e(err);
-        } finally {
-          _iterator2.f();
-        }
-      });
     }
   }]);
 
@@ -242,7 +268,7 @@ var section1 = new Section('section1', 'Section 1', 'Section 1', [paragraph1, pa
 var section2 = new Section('section2', 'Section 2', 'Section 2', [paragraph1, paragraph2]);
 var section3 = new Section('section3', 'Section 3', 'Section 3', [paragraph1, paragraph2]);
 var section4 = new Section('section4', 'Section 4', 'Section 4', [paragraph1, paragraph2]);
-var contentSections = [section1, section2, section3, section4]; // populate the page with content sections and their corresponding anchors
+var contentSections = [section1, section2, section3, section4]; // Populate the page with content sections, anchors, and add necessary event listeners
 
 function buildApp() {
   for (var _i = 0, _contentSections = contentSections; _i < _contentSections.length; _i++) {
@@ -252,9 +278,12 @@ function buildApp() {
     main.appendChild(sectionHTML); // add the section anchor in the navigation bar
 
     var listItemHTML = section.createAnchorInNavbar();
-  }
+  } // Add scroll event listener to handle the active section task
 
-  addEventListener(contentSections);
+
+  activeSectionHandle(contentSections); // show navigation bar when scrolling
+
+  toggleNavbarHandle();
 }
 
 buildApp();
@@ -286,7 +315,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63904" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51107" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

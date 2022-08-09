@@ -1,22 +1,69 @@
-// get the list that we will put the anchors in
+// Get the list that we will put the anchors in
 let navbarList = document.getElementById('navbar__list')
 
-// Add all sections to the page
+// Get the main that we add the sections to
 const main = document.querySelector('main')
+
+// Get the navbar menu
+const navbar = document.querySelector('.navbar__menu')
 
 // Fake paragraphs for the sections
 const paragraph1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.'
 const paragraph2 = 'Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.'
 
-// function to determine if an element is in the viewport
+// Determine if an element is in the viewport
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
-        (rect.top + 150) >= 0 &&            //is top in viewport
-        rect.left >= 0 &&            //is left in viewport
-        (rect.bottom - 150) <= (window.innerHeight || document.documentElement.clientHeight) &&         //is bottom in viewport
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)            //is right in viewport
+        (rect.top + 150) >= 0 &&  //is top in viewport
+        rect.left >= 0 &&  //is left in viewport
+        (rect.bottom - 150) <= (window.innerHeight || document.documentElement.clientHeight) &&  //is bottom in viewport
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)  //is right in viewport
     );
+}
+
+// Add a scroll event listener to the document to highlight the section in the viewport
+function activeSectionHandle(contentsections){
+    document.addEventListener('scroll', () => {
+        for (let section of contentSections){
+            const sectionHTML = document.getElementById(section.id) 
+            if(isInViewport(sectionHTML.querySelector('p'))){
+                section.isActive = true
+                sectionHTML.classList.add('active-section')
+            }else{
+                section.isActive = false
+                sectionHTML.classList.remove('active-section')            
+            }
+        }
+    })
+}
+
+// Helper method that runs a callback method when user stops scrolling 
+const onScrollStop = callback => {
+    let isScrolling;
+    window.addEventListener('scroll', e => {
+        clearTimeout(isScrolling);
+        isScrolling = setTimeout(() => callback(), 150);
+      },
+      false
+    )
+}
+
+// Handle showing and hiding the navigation bar
+function toggleNavbarHandle(){
+
+    // Shows navigation bar when the user scrolls
+    document.addEventListener('scroll', () => {
+        navbar.style.visibility = 'visible'
+    })
+    
+    // Hide navigation bar after user stops scrolling
+    onScrollStop(() => {
+        setTimeout(() => {
+            navbar.style.visibility = 'hidden'
+        }, "1500")
+    })
+
 }
 
 class Section{
@@ -28,7 +75,7 @@ class Section{
         this.isActive = false
     }
 
-    // this method creates the section html element that will be viewed on the page
+    // Create the section html element that will be viewed on the page
     createContentSection(){
         const sectionElement = document.createElement('section')
         sectionElement.setAttribute('id', this.id)
@@ -53,7 +100,7 @@ class Section{
         return sectionElement
     }
 
-    // Adds the anchor to a section in the navigation bar
+    // Add the section anchor to the navigation bar
     createAnchorInNavbar(){
         const listItemElement = document.createElement('li')
         listItemElement.setAttribute('class', 'menu__link')
@@ -69,22 +116,6 @@ class Section{
         return listItemElement
     }
 
-    // add a scroll event listener to the whole document to highlight the section in the viewport
-    addScrollListener(contentsections){
-        document.addEventListener('scroll', () => {
-            for (let section of contentSections){
-                const sectionHTML = document.getElementById(section.id) 
-                if(isInViewport(sectionHTML.querySelector('p'))){
-                    section.isActive = true
-                    sectionHTML.classList.add('active-section')
-                }else{
-                    section.isActive = false
-                    sectionHTML.classList.remove('active-section')            
-                }
-            }}
-        )
-    }
-
 }
 
 // Create an array with all the sections that are supposedly fetched from a database xD
@@ -94,7 +125,7 @@ const section3 = new Section('section3', 'Section 3', 'Section 3', [paragraph1, 
 const section4 = new Section('section4', 'Section 4', 'Section 4', [paragraph1, paragraph2])
 const contentSections = [section1, section2, section3, section4]
 
-// populate the page with content sections and their corresponding anchors
+// Populate the page with content sections, anchors, and add necessary event listeners
 function buildApp(){
 
     for (let section of contentSections){
@@ -105,9 +136,17 @@ function buildApp(){
         
         // add the section anchor in the navigation bar
         const listItemHTML = section.createAnchorInNavbar()
+        
     }
 
-    addEventListener(contentSections)
+    // Add scroll event listener to handle the active section task
+    activeSectionHandle(contentSections)
+
+    // show navigation bar when scrolling
+    toggleNavbarHandle()
+
+
 }
 
 buildApp()
+
