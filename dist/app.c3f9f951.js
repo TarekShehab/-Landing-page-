@@ -201,6 +201,18 @@ function toggleNavbarHandle() {
   });
 }
 
+function scrollToTopButtonHandle() {
+  var doc = document.querySelector('html');
+  var toTop = document.getElementById('scrollup-button');
+  document.addEventListener('scroll', function () {
+    if (window.scrollY >= doc.clientHeight / 2) {
+      toTop.style.visibility = 'visible';
+    } else {
+      toTop.style.visibility = 'hidden';
+    }
+  });
+}
+
 var Section = /*#__PURE__*/function () {
   function Section(id, dataNav, title, contents) {
     _classCallCheck(this, Section);
@@ -281,9 +293,11 @@ function buildApp() {
   } // Add scroll event listener to handle the active section task
 
 
-  activeSectionHandle(contentSections); // show navigation bar when scrolling
+  activeSectionHandle(contentSections); // Show/Hide navigation bar
 
-  toggleNavbarHandle();
+  toggleNavbarHandle(); // Show/hide scroll to top button
+
+  scrollToTopButtonHandle();
 }
 
 buildApp();
@@ -315,7 +329,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51107" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62116" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

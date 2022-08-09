@@ -66,6 +66,23 @@ function toggleNavbarHandle(){
 
 }
 
+function scrollToTopButtonHandle(){
+    
+    const doc = document.querySelector('html')
+    const toTop = document.getElementById('scrollup-button')
+
+    document.addEventListener('scroll', () => {
+        if (window.scrollY >= (doc.clientHeight/2)){
+            toTop.style.visibility = 'visible'
+        }
+        else{
+            toTop.style.visibility = 'hidden'            
+        }
+        
+    })
+
+}
+
 class Section{
     constructor(id, dataNav, title, contents){
         this.id = id
@@ -142,11 +159,12 @@ function buildApp(){
     // Add scroll event listener to handle the active section task
     activeSectionHandle(contentSections)
 
-    // show navigation bar when scrolling
+    // Show/Hide navigation bar
     toggleNavbarHandle()
 
-
+    // Show/hide scroll to top button
+    scrollToTopButtonHandle()
 }
 
-buildApp()
 
+buildApp()

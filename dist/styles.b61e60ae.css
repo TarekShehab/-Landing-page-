@@ -1,6 +1,7 @@
 /* ---- Base Rules ---- */
 html {
     scroll-behavior: smooth;
+    box-sizing: border-box;
 }
 
 body {
@@ -237,6 +238,16 @@ section.active-section .landing__container::after {
 		           translate(-1em) 
 		           rotate(-360deg);
 	}
+}
+
+#scrollup-button {
+    opacity: .6;
+    font-size: 4rem;
+    height: 5rem;
+    width: 5rem;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;  
 }
 
 /*# sourceMappingURL=/styles.b61e60ae.css.map */
