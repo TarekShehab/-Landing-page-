@@ -56,6 +56,10 @@ class Section{
             }
         })
 
+        main.appendChild(sectionElement)
+
+        this.createAnchorInNavbar()
+
         return sectionElement
     }
 
@@ -65,7 +69,11 @@ class Section{
         listItemElement.setAttribute('class', 'menu__link')
 
         const anchorElement = document.createElement('a')
-        anchorElement.setAttribute('href', "#"+this.id)
+        anchorElement.setAttribute('id', this.id + 'anchor')
+        anchorElement.addEventListener('click', () => {
+            const sectionHTML = document.getElementById(this.id)
+            sectionHTML.scrollIntoView({behavior: "smooth"})
+        })
         anchorElement.textContent = this.title
 
         listItemElement.appendChild(anchorElement)
@@ -95,9 +103,8 @@ const section1 = new Section('section1', 'Section 1', 'Section 1', [paragraph1, 
 const section2 = new Section('section2', 'Section 2', 'Section 2', [paragraph1, paragraph2])
 const section3 = new Section('section3', 'Section 3', 'Section 3', [paragraph1, paragraph2])
 const section4 = new Section('section4', 'Section 4', 'Section 4', [paragraph1, paragraph2])
-const contentSections = [section1, section2, section3, section4]
-
-
+// const section5 = new Section('section5', 'Section 5', 'Section 5', [paragraph1, paragraph2])
+const contentSections = [section1, section2, section3 ,section4]
 
 // Determine if an element is in the viewport
 const isInViewport = element => {
@@ -116,13 +123,18 @@ const isInViewport = element => {
 const activeSectionHandle = contentsections => {
     document.addEventListener('scroll', () => {
         for (let section of contentSections){
-            const sectionHTML = document.getElementById(section.id) 
+            const sectionHTML = document.getElementById(section.id)
+            const anchorHTML = document.getElementById(section.id + 'anchor')
             if(isInViewport(sectionHTML.querySelector('p'))){
                 section.isActive = true
                 sectionHTML.classList.add('active-section')
+                anchorHTML.classList.add('active-section')
+                anchorHTML.style.backgroundColor = 'black'
             }else{
                 section.isActive = false
-                sectionHTML.classList.remove('active-section')            
+                sectionHTML.classList.remove('active-section')    
+                anchorHTML.classList.remove('active-section')
+                anchorHTML.style.backgroundColor = 'transparent'         
             }
         }
     })
@@ -178,13 +190,19 @@ const scrollToTopButtonHandle = () => {
 const buildApp = () => {
 
     for (let section of contentSections){       
-        // Add the section on page
-        const sectionHTML = section.createContentSection()
-        main.appendChild(sectionHTML)
-        
-        // Add the section anchor in the navigation bar
-        const listItemHTML = section.createAnchorInNavbar()     
+        section.createContentSection() 
     }
+
+    /*
+        In order for the code to be more dynamic, I added a call for createAnchorInNavbar() inside 
+        the createContentSection() itself. This way, the anchor will always be added to the navigation bar
+        when the section is added to the page. I don't know if I got exactly what you meant in the review
+        but I thought sections are only going to be created through createContentSection() so there is no
+        need for more code to make it dynamic. As I understand, less code is better code as long as it's 
+        readable, and functioning as expected.
+
+        I'm eager to get you feedback on this. Thanks for your time.
+    */
 
     // Add scroll event listener to handle the active section task
     activeSectionHandle(contentSections)

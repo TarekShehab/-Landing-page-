@@ -1,10 +1,14 @@
-# Landing Page
+## Landing Page
 
-## Table of contents
+# Table of contents
 
-- [index.html](###index.html)
-- [style.css](###style.css)
-- [app.js](###app.js)
+- Project Files.
+- Project description.
+- Instructions on how to run the project.
+- Technologies used.
+- Author's name.
+
+# Project Files.
 
 ### index.html
 
@@ -13,10 +17,10 @@
 ### style.css
 
     Some minor changes were made on the style sheet to manipulate things such as:
-    * Display modes.
-    * text alignments.
-    * Colors.
-    * Elements' Opacity.
+    - Display modes.
+    - text alignments.
+    - Colors.
+    - Elements' Opacity.
 
 ### app.js
 
@@ -54,10 +58,40 @@
         • activeSectionHandle(ContentSections): Handles highlighting the active section (section in viewport).
         • onScrollStop(callback): Runs the callback method if user stops scrolling.
         • toggleNavbarHandle(): Handles toggling the navigationbar.
-        • scrollToTopButtonHandle: Handles toggling the scroll-to-top button.
-        • buildApp: builds the whole app and puts it in place in the HTML.
+        • scrollToTopButtonHandle(): Handles toggling the scroll-to-top button.
+        • buildApp(): builds the whole app and puts it in place in the HTML.
 
 
 
     - Build Call -
         Calling the build function to build the whole app.
+
+# Project Description.
+
+    The project is simple landin page. It's developed using HTML, CSS, and Javascript. The project is for learning purposes as a part of the Udacity professional web development nanodegree.
+
+# Instructions on how to run the project.
+
+To run the project, Simply open the `index.html` file in your browser, Or with your terminal through these commands:
+
+```
+cd <project's directory>
+npm install
+npm run dev
+
+```
+
+then open your browser on: `http://localhost:1234/`
+
+# Technologies used.
+
+- HTML
+- CSs
+- Javascript
+- node.js
+- Parcel bundler
+
+# Author's name.
+
+    Tarek Shehabeldin Ibrahim.
+    Connect with me on LinkedIn: https://www.linkedin.com/in/tarek-shehab-381848156/

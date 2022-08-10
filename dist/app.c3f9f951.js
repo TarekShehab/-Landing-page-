@@ -185,7 +185,7 @@ var Section = /*#__PURE__*/function () {
       }
 
       collapseButton.addEventListener('click', function () {
-        // Not collapsed
+        // Uncollapsed => collapse
         if (collapseButton.textContent === '▼') {
           collapseButton.textContent = '►';
 
@@ -202,7 +202,7 @@ var Section = /*#__PURE__*/function () {
           } finally {
             _iterator2.f();
           }
-        } // Collapsed
+        } // Collapsed => Uncollapsed
         else {
           collapseButton.textContent = '▼';
 
@@ -227,10 +227,16 @@ var Section = /*#__PURE__*/function () {
   }, {
     key: "createAnchorInNavbar",
     value: function createAnchorInNavbar() {
+      var _this = this;
+
       var listItemElement = document.createElement('li');
       listItemElement.setAttribute('class', 'menu__link');
       var anchorElement = document.createElement('a');
-      anchorElement.setAttribute('href', "#" + this.id);
+      anchorElement.setAttribute('id', this.id + 'anchor');
+      anchorElement.addEventListener('click', function () {
+        var section = document.getElementById(_this.id);
+        section.scrollIntoView();
+      });
       anchorElement.textContent = this.title;
       listItemElement.appendChild(anchorElement);
       navbarList.appendChild(listItemElement);
@@ -242,11 +248,11 @@ var Section = /*#__PURE__*/function () {
 }(); // Get the list that we will put the anchors in
 
 
-var navbarList = document.getElementById('navbar__list'); // Get the main that we add the sections to
+var navbarList = document.getElementById('navbar__list'); // Get the navbar menu
 
-var main = document.querySelector('main'); // Get the navbar menu
+var navbar = document.querySelector('.navbar__menu'); // Get the main that we add the sections to
 
-var navbar = document.querySelector('.navbar__menu'); // Fake paragraphs for the sections
+var main = document.querySelector('main'); // Fake paragraphs for the sections
 
 var paragraph1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.';
 var paragraph2 = 'Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.'; // Create an array with all the sections that are supposedly fetched from a database xD
@@ -255,7 +261,8 @@ var section1 = new Section('section1', 'Section 1', 'Section 1', [paragraph1, pa
 var section2 = new Section('section2', 'Section 2', 'Section 2', [paragraph1, paragraph2]);
 var section3 = new Section('section3', 'Section 3', 'Section 3', [paragraph1, paragraph2]);
 var section4 = new Section('section4', 'Section 4', 'Section 4', [paragraph1, paragraph2]);
-var contentSections = [section1, section2, section3, section4]; // Determine if an element is in the viewport
+var section5 = new Section('section5', 'Section 5', 'Section 5', [paragraph1, paragraph2]);
+var contentSections = [section1, section2, section3, section4, section5]; // Determine if an element is in the viewport
 
 var isInViewport = function isInViewport(element) {
   var rect = element.getBoundingClientRect();
@@ -276,13 +283,17 @@ var activeSectionHandle = function activeSectionHandle(contentsections) {
       for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
         var section = _step4.value;
         var sectionHTML = document.getElementById(section.id);
+        var anchorHTML = document.getElementById(section.id + 'anchor');
+        console.log(anchorHTML);
 
         if (isInViewport(sectionHTML.querySelector('p'))) {
           section.isActive = true;
           sectionHTML.classList.add('active-section');
+          anchorHTML.style.backgroundColor = 'black';
         } else {
           section.isActive = false;
           sectionHTML.classList.remove('active-section');
+          anchorHTML.style.backgroundColor = 'white';
         }
       }
     } catch (err) {
@@ -316,7 +327,8 @@ var toggleNavbarHandle = function toggleNavbarHandle() {
       navbar.style.visibility = 'hidden';
     }, "1500");
   });
-};
+}; // Handle show/hide scroll-to-top button
+
 
 var scrollToTopButtonHandle = function scrollToTopButtonHandle() {
   var doc = document.querySelector('html');
@@ -331,23 +343,32 @@ var scrollToTopButtonHandle = function scrollToTopButtonHandle() {
 }; // Populate the page with content sections, anchors, and add necessary event listeners
 
 
-function buildApp() {
-  for (var _i = 0, _contentSections = contentSections; _i < _contentSections.length; _i++) {
-    var section = _contentSections[_i];
-    // Add the section on page
-    var sectionHTML = section.createContentSection();
-    main.appendChild(sectionHTML); // Add the section anchor in the navigation bar
+var buildApp = function buildApp() {
+  var _iterator5 = _createForOfIteratorHelper(contentSections),
+      _step5;
 
-    var listItemHTML = section.createAnchorInNavbar();
-  } // Add scroll event listener to handle the active section task
+  try {
+    for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+      var section = _step5.value;
+      // Add the section on page
+      var sectionHTML = section.createContentSection();
+      main.appendChild(sectionHTML); // Add the section anchor in the navigation bar
 
+      var listItemHTML = section.createAnchorInNavbar();
+    } // Add scroll event listener to handle the active section task
+
+  } catch (err) {
+    _iterator5.e(err);
+  } finally {
+    _iterator5.f();
+  }
 
   activeSectionHandle(contentSections); // Show/Hide navigation bar
 
   toggleNavbarHandle(); // Show/hide scroll to top button
 
   scrollToTopButtonHandle();
-}
+};
 
 buildApp();
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -378,7 +399,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63541" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63395" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
