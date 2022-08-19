@@ -164,7 +164,7 @@ const toggleNavbarHandle = () => {
     onScrollStop(() => {
         setTimeout(() => {
             navbar.style.visibility = 'hidden'
-        }, "1500")
+        }, "5000")
     })
 }
 

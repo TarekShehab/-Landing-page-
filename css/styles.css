@@ -215,10 +215,6 @@ section.active-section {
     background: linear-gradient(0deg, rgba(0, 0, 0, .8) 0%, rgba(0, 0, 0, 0.15) 100%);
 }
 
-/* section.active-section p {
-    background-color: #581845;
-} */
-
 section.active-section .landing__container::before {
     opacity: 1;
     animation: rotate 4s linear 0s infinite forwards;
