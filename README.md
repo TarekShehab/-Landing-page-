@@ -93,5 +93,5 @@ then open your browser on: `http://localhost:1234/`
 
 # Author's name.
 
-Tarek Shehabeldin Ibrahim.
-Connect with me on LinkedIn: `https://www.linkedin.com/in/tarek-shehab-381848156/`
+    Tarek Shehabeldin Ibrahim.
+    Connect with me on LinkedIn: https://www.linkedin.com/in/tarek-shehab-381848156/
